@@ -14,3 +14,6 @@
     'broken_lines': 1,
 }
 ```
+___
+## Запуск
+Запустите файл log_analyzer.py

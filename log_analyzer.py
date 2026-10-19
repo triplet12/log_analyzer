@@ -36,7 +36,7 @@ def analyze_log(path: Path, json_path: Path) -> dict:
     '''Анализ лога'''
 
     if not path.exists():
-        raise FileNotFoundError('Файл server.log не найден.')
+        raise FileNotFoundError(f'Файл {path} не найден.')
 
     analyze_result = {
         "levels": {'INFO': 0, 'WARNING': 0, 'ERROR': 0},
