@@ -31,12 +31,8 @@ def save_result(result, json_path) -> None:
             )
     
 
-
-def analyze_log(path: Path, json_path: Path) -> dict:
-    '''Анализ лога'''
-
-    if not path.exists():
-        raise FileNotFoundError(f'Файл {path} не найден.')
+def analyze_lines(lines: list[str]) -> dict:
+    '''Анализ строк'''
 
     analyze_result = {
         "levels": {'INFO': 0, 'WARNING': 0, 'ERROR': 0},
@@ -44,12 +40,12 @@ def analyze_log(path: Path, json_path: Path) -> dict:
         "errors_by_hour": {},
         'broken_lines': 0,
     }
-    
-    contents = path.read_text(encoding='UTF-8').rstrip().splitlines()
+
     ip_vocab = {}
 
-    for line in contents:
-        if not line.strip(): continue
+    for line in lines:
+        if not line.strip(): 
+            continue
 
         if not is_valid_line(line.split(maxsplit=4)):  # Ошибки
             analyze_result['broken_lines'] += 1
@@ -71,6 +67,18 @@ def analyze_log(path: Path, json_path: Path) -> dict:
         top_error_ip = max(ip_vocab, key=lambda ip: ip_vocab[ip])
         analyze_result['top_error_ip'] = top_error_ip
 
+    return analyze_result
+
+
+def analyze_log(path: Path, json_path: Path) -> dict:
+    '''Анализ лога'''
+
+    if not path.exists():
+        raise FileNotFoundError(f'Файл {path} не найден.')
+    
+    lines = path.read_text(encoding='UTF-8').rstrip().splitlines()
+
+    analyze_result = analyze_lines(lines)
     save_result(analyze_result, json_path)
     return analyze_result
 
