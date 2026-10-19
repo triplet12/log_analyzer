@@ -25,13 +25,13 @@ ___
 ## Установка
 В консоле выполните 
 ```
-python log_analyzer.py
+pip install -r requirements.txt
 ```
 ## Запуск программы
 
 Запуститеп файл log_analyzer.py
 ```
-pip install -r requirements.txt
+python log_analyzer.py
 ```
 ## Запуск тестов
 
