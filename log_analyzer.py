@@ -1,8 +1,11 @@
-from pathlib import Path
 import datetime
 import ipaddress
+import json
+from pathlib import Path
+
 
 def is_valid_line(line: list):
+    
     levels = ["INFO", "ERROR", "WARNING"]
     if len(line) == 5:
         try:
@@ -16,7 +19,9 @@ def is_valid_line(line: list):
                 return True
     return False
 
-def analyze_log(path: Path):
+
+def analyze_log(path: Path, json_path: Path):
+
     analyze_result = {
         "levels": {'INFO': 0, 'WARNING': 0, 'ERROR': 0},
         "top_error_ip" : None,
@@ -48,13 +53,17 @@ def analyze_log(path: Path):
                 ip_vocab[ip] = 0
             ip_vocab[ip] +=1
 
-    if contents:
+    if ip_vocab:
         top_error_ip = max(ip_vocab, key=lambda ip: ip_vocab[ip])
         analyze_result['top_error_ip'] = top_error_ip
 
-    return analyze_result
+    analyze_result_json = json_path.write_text(json.dumps(
+        analyze_result, ensure_ascii=False, indent=4),
+        encoding='UTF-8'
+        )
+    return analyze_result_json
 
+path = Path('server.log')
+json_path = Path('analyze_result.json')
+result = analyze_log(path, json_path)
 
-
-result = analyze_log(Path('server.log'))
-print(result)

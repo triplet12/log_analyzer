@@ -1,0 +1,8 @@
+2026-10-15 09:12:01 INFO 192.168.1.10 User login
+2026-10-15 09:15:44 ERROR 192.168.1.22 Database timeout
+2026-10-15 10:02:13 WARNING 192.168.1.10 Slow response
+2026-10-15 10:30:00 ERROR 192.168.1.22 Database timeout
+2026-10-15 10:31:12 INFO 192.168.1.35 User logout
+2026-10-15 11:05:47 ERROR 192.168.1.10 Permission denied
+битая строка без формата
+2026-10-15 11:20:03 INFO 192.168.1.35 User login
