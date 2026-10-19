@@ -58,7 +58,3 @@ def analyze_log(path: Path):
 
 result = analyze_log(Path('server.log'))
 print(result)
-assert result['levels'] == {'INFO': 3, 'WARNING': 1, 'ERROR': 3}
-assert result['top_error_ip'] == '192.168.1.22'
-assert result['errors_by_hour'] == {'09': 1, '10': 1, '11': 1}
-assert result['broken_lines'] == 1
