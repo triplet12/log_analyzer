@@ -23,7 +23,16 @@ def is_valid_line(parts: list) -> bool:
     return False
 
 
-def analyze_log(path: Path, json_path: Path) -> Path:
+def save_result(result, json_path) -> None:
+    ''' Вывод результата анализа лог в json-файл.'''
+    analyze_result_json = json_path.write_text(json.dumps(
+            result, ensure_ascii=False, indent=4),
+            encoding='UTF-8'
+            )
+    
+
+
+def analyze_log(path: Path, json_path: Path) -> dict:
     '''Анализ лога'''
 
     if not path.exists():
@@ -62,13 +71,9 @@ def analyze_log(path: Path, json_path: Path) -> Path:
         top_error_ip = max(ip_vocab, key=lambda ip: ip_vocab[ip])
         analyze_result['top_error_ip'] = top_error_ip
 
-    analyze_result_json = json_path.write_text(json.dumps(
-        analyze_result, ensure_ascii=False, indent=4),
-        encoding='UTF-8'
-        )
-    return analyze_result_json
+    save_result(analyze_result, json_path)
+    return analyze_result
 
 path = Path('server.log')
 json_path = Path('analyze_result.json')
 result = analyze_log(path, json_path)
-
