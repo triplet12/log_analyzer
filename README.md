@@ -5,7 +5,7 @@
 2026-10-15 09:12:01 INFO 192.168.1.10 User login
 ```
 
-И возвращает словарь вида
+И создает/изменяет файл analyze_reslult.json
 ```
 {
     'levels': {'INFO': 3, 'WARNING': 1, 'ERROR': 3},
