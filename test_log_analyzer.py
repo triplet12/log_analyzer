@@ -37,3 +37,16 @@ def test_log_without_errors(tmp_path):
 
     result = analyze_log(log)
     assert result['top_error_ip'] is None
+
+def test_normal_log():
+    lines = [
+        '2026-10-15 09:15:44 ERROR 192.168.1.22 Database timeout',
+        '2026-10-15 10:30:00 ERROR 192.168.1.22 Database timeout',
+        '2026-10-15 10:31:12 INFO 192.168.1.35 User logout',
+    ]
+    assert analyze_lines(lines) == {
+        'levels': {'INFO': 1, 'WARNING': 0, 'ERROR': 2},
+        'top_error_ip': '192.168.1.22',
+        'errors_by_hour': {'09': 1, '10': 1},
+        'broken_lines': 0,
+    }

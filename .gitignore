@@ -1,3 +1,5 @@
 venv/
 tempCodeRunnerFile.py
 analyze_result.json
+__pycache__/
+.pytest_cache/
