@@ -45,7 +45,7 @@ def analyze_log(path: Path, json_path: Path) -> dict:
         'broken_lines': 0,
     }
     
-    contents = path.read_text().rstrip().splitlines()
+    contents = path.read_text(encoding='UTF-8').rstrip().splitlines()
     ip_vocab = {}
 
     for line in contents:
@@ -74,6 +74,8 @@ def analyze_log(path: Path, json_path: Path) -> dict:
     save_result(analyze_result, json_path)
     return analyze_result
 
-path = Path('server.log')
-json_path = Path('analyze_result.json')
-result = analyze_log(path, json_path)
+
+if __name__ == '__main__':
+    path = Path('server.log')
+    json_path = Path('analyze_result.json')
+    result = analyze_log(path, json_path)
