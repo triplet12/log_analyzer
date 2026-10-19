@@ -15,5 +15,20 @@
 }
 ```
 ___
-## Запуск
-Запустите файл log_analyzer.py
+## Установка
+В консоле выполните 
+```
+pip install -r requirements.txt
+```
+## Запуск программы
+
+Запуститеп файл log_analyzer.py
+```
+pip install -r requirements.txt
+```
+## Запуск тестов
+
+В консоле выполните 
+```
+pytest
+```

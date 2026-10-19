@@ -70,20 +70,16 @@ def analyze_lines(lines: list[str]) -> dict:
     return analyze_result
 
 
-def analyze_log(path: Path, json_path: Path) -> dict:
-    '''Анализ лога'''
+def analyze_log(path: Path) -> dict:
+    """Читает лог и возвращает результат анализа."""
 
     if not path.exists():
         raise FileNotFoundError(f'Файл {path} не найден.')
     
-    lines = path.read_text(encoding='UTF-8').rstrip().splitlines()
-
-    analyze_result = analyze_lines(lines)
-    save_result(analyze_result, json_path)
-    return analyze_result
+    lines = path.read_text(encoding='utf-8').splitlines()
+    return analyze_lines(lines)
 
 
 if __name__ == '__main__':
-    path = Path('server.log')
-    json_path = Path('analyze_result.json')
-    result = analyze_log(path, json_path)
+    result = analyze_log(Path('server.log'))
+    save_result(result, Path('analyze_result.json'))
