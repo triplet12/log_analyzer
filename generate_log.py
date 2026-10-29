@@ -1,4 +1,5 @@
 from random import randint, choice
+from string import ascii_lowercase
 
 
 def random_ip_generator():
@@ -33,4 +34,7 @@ def random_level_generate():
         yield choice(levels)
 
 
-    
+def random_message_generate():
+    letters = ascii_lowercase + ' '
+    yield ''.join(choice(letters) for _ in range(randint(1, 30)))
+
