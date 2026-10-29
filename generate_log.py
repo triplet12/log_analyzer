@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, choice
 
 
 def random_ip_generator():
@@ -11,6 +11,7 @@ def random_ip_generator():
                 f"{randint(0,255)}"
         yield rand_ip
 
+
 def random_date_generator():
     if randint(1,100) == 1:
         yield 'Мусор'
@@ -22,3 +23,14 @@ def random_date_generator():
                 f"{randint(0,59)}:"\
                 f"{randint(0,59)}"
         yield rand_date
+
+
+def random_level_generate():
+    levels = ('ERROR', 'WARNING', 'INFO')
+    if randint(1,100) == 1:
+        yield 'Мусор'
+    else:
+        yield choice(levels)
+
+
+    
