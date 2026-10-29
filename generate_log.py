@@ -53,3 +53,6 @@ def generate_string():
             f"{next(random_message_generate())}"
         yield result
 
+def generate_log(length:int = 1_000_000):
+    for rnd_str in generate_string():
+        Path('server_log').write_text(rnd_str,encoding='UTF-8')
