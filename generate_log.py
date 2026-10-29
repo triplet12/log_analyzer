@@ -40,7 +40,7 @@ def random_message_generate():
     yield ''.join(choice(letters) for _ in range(randint(1, 30)))
 
 
-def generate_string(bad_string_chance=500):
+def generate_line(bad_string_chance=500):
     randomizer = randint(0,bad_string_chance)
     if randomizer == 0:
         yield '\n'
@@ -58,11 +58,10 @@ def generate_log(length:int = 1_000_000, bad_sting_chance=500):
     counter = 0
     path = Path('server.log')
     path.write_text('', encoding='UTF-8')
-    while counter < length:
-        rnd_str = next(generate_string(bad_sting_chance))
-        with path.open("a", encoding="utf-8") as f:
-            f.write(rnd_str)
-        counter += 1
+    with path.open("a", encoding="utf-8") as f:
+        for line in generate_line():
+            f.write(line)
+
 
 
 generate_log()
