@@ -21,7 +21,7 @@ def random_date(bad_string_chance:int) -> str:
     '''Возвращает рандомную дату формата %Y-%m-%d %H:%M:%S, 
     либо мусор с шансом 1/bad_string_chance'''
 
-    if randint(1, bad_string_chance):
+    if randint(1, bad_string_chance) == 1:
         return 'мусор'
     start = datetime(2026, 1, 1)
     moment = start + timedelta(seconds=randint(0, 365 * 24 * 3600))
