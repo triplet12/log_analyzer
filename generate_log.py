@@ -42,7 +42,7 @@ def random_message() -> str:
     '''Возвращает рандомное сообщение длинной от 1 до 30 символов'''
 
     letters = ascii_lowercase + ' '
-    return ''.join(choice(letters) for _ in range(randint(1, 30)))
+    return choice(ascii_lowercase) + ''.join(choice(letters) for _ in range(randint(1, 30)))
 
 
 def generate_line(bad_string_chance:int=500) -> str:
