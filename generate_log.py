@@ -16,6 +16,8 @@ def random_ip(bad_string_chance):
 
 
 def random_date(bad_string_chance):
+    if randint(1, bad_string_chance):
+        return 'мусор'
     start = datetime(2026, 1, 1)
     moment = start + timedelta(seconds=randint(0, 365 * 24 * 3600))
     return moment.strftime('%Y-%m-%d %H:%M:%S') 
