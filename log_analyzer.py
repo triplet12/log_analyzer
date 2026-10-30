@@ -85,7 +85,9 @@ def aggregate(records: dict|None) -> dict:
         
     return analyze_result
 
+def analyze_log(path: Path) -> dict:
+    return aggregate(parse(read_lines(path)))
+
 if __name__ == '__main__':
-    # result = analyze_log(Path('server.log'))
-    result = aggregate(parse(read_lines(Path('server.log'))))
+    result = analyze_log(Path('server.log'))
     save_result(result, Path('analyze_result.json'))
