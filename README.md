@@ -29,9 +29,15 @@ pip install -r requirements.txt
 ```
 ## Запуск программы
 
-Запуститеп файл log_analyzer.py
+Запустите файл log_analyzer.py
 ```
 python log_analyzer.py
+```
+
+## Генерация тестового лога
+Запустите файл generate_log.py
+```
+python generate_log.py
 ```
 ## Запуск тестов
 
