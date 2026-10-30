@@ -31,54 +31,6 @@ def save_result(result, json_path) -> None:
             )
     
 
-def analyze_lines(lines: list[str]) -> dict:
-    '''Анализ строк'''
-
-    analyze_result = {
-        "levels": {'INFO': 0, 'WARNING': 0, 'ERROR': 0},
-        "top_error_ip" : None,
-        "errors_by_hour": {},
-        'broken_lines': 0,
-    }
-
-    ip_vocab = {}
-
-    for line in lines:
-        if not line.strip(): 
-            continue
-
-        if not is_valid_line(line.split(maxsplit=4)):  # Ошибки
-            analyze_result['broken_lines'] += 1
-            continue
-
-        date, time, level, ip, message = line.split(maxsplit=4)
-
-        analyze_result['levels'][level] +=1 # Уровни
-
-        if level == "ERROR":
-            err_by_hour_vocab = analyze_result['errors_by_hour'] # Ошибки по часам
-            hour = time.split(':')[0]
-            err_by_hour_vocab[hour] = err_by_hour_vocab.get(hour, 0) + 1
-
-
-            ip_vocab[ip] = ip_vocab.get(ip, 0) + 1
-
-    if ip_vocab:
-        top_error_ip = max(ip_vocab, key=lambda ip: ip_vocab[ip])
-        analyze_result['top_error_ip'] = top_error_ip
-
-    return analyze_result
-
-
-def analyze_log(path: Path) -> dict:
-    """Читает лог и возвращает результат анализа."""
-
-    if not path.exists():
-        raise FileNotFoundError(f'Файл {path} не найден.')
-    
-    lines = path.read_text(encoding='utf-8').splitlines()
-    return analyze_lines(lines)
-
 def read_lines(path: Path):
     with path.open(encoding='UTF-8') as f:
         for line in f:
