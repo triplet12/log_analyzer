@@ -2,7 +2,7 @@ from log_analyzer import aggregate, parse, analyze_log
 
 
 def test_empty_log():
-    result = aggregate(parse(aggregate(parse([]))))
+    result = aggregate(parse([]))
     assert result['broken_lines'] == 0
     assert result['top_error_ip'] is None
 
