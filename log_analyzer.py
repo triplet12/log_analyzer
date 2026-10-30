@@ -32,11 +32,13 @@ def save_result(result, json_path) -> None:
     
 
 def read_lines(path: Path):
+    '''Читает файл и возвращает по строке'''
     with path.open(encoding='UTF-8') as f:
         for line in f:
             yield line.rstrip()
 
-def parse(lines):
+def parse(lines) -> dict|None:
+    '''Возвращает словарь содержащий поля строки либо none если строка некорреткная'''
     for line in lines:
         if not line.rstrip(): 
             continue
@@ -50,6 +52,7 @@ def parse(lines):
 
 
 def aggregate(records: dict|None) -> dict:
+    '''Возвращает словарь с информацией о строках'''
     analyze_result = {
                 "levels": {'INFO': 0, 'WARNING': 0, 'ERROR': 0},
                 "top_error_ip" : None,
