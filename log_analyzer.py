@@ -84,6 +84,17 @@ def read_lines(path: Path):
         for line in f:
             yield line.rstrip()
 
+def parse(lines):
+    for line in lines:
+        if not line.rstrip(): 
+            continue
+
+        if not is_valid_line(line.split(maxsplit=4)):  # Ошибки
+            yield None
+            continue
+
+        date, time, level, ip, message = line.split(maxsplit=4)
+        yield {'date': date, 'time': time, 'level': level, 'ip': ip, 'message': message}
 
 if __name__ == '__main__':
     result = analyze_log(Path('server.log'))
