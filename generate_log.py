@@ -4,7 +4,7 @@ from string import ascii_lowercase
 from datetime import datetime, timedelta
 
 
-def random_ip(bad_string_chance):
+def random_ip(bad_string_chance: int) -> str:
     if randint(1,bad_string_chance) == 1:
         return 'Мусор'
     else:
@@ -15,7 +15,7 @@ def random_ip(bad_string_chance):
         return rand_ip
 
 
-def random_date(bad_string_chance):
+def random_date(bad_string_chance:int) -> str:
     if randint(1, bad_string_chance):
         return 'мусор'
     start = datetime(2026, 1, 1)
@@ -23,7 +23,7 @@ def random_date(bad_string_chance):
     return moment.strftime('%Y-%m-%d %H:%M:%S') 
 
 
-def random_level(bad_string_chance):
+def random_level(bad_string_chance:int) -> str:
     levels = ('ERROR', 'WARNING', 'INFO')
     if randint(1,bad_string_chance) == 1:
         return 'Мусор'
@@ -31,12 +31,12 @@ def random_level(bad_string_chance):
         return choice(levels)
 
 
-def random_message():
+def random_message() -> str:
     letters = ascii_lowercase + ' '
     return ''.join(choice(letters) for _ in range(randint(1, 30)))
 
 
-def generate_line(bad_string_chance=500):
+def generate_line(bad_string_chance:int=500) -> str:
     randomizer = randint(0,bad_string_chance)
     if randomizer == 0:
         return '\n'
@@ -49,11 +49,13 @@ def generate_line(bad_string_chance=500):
             f"{random_message()}\n"
         return result
 
-def generate_lines(length:int = 1_000_000,bad_string_chance=500):
+
+def generate_lines(length:int=1_000,bad_string_chance:int=500):
     for _ in range(length):
         yield generate_line(bad_string_chance)
 
-def generate_log(length:int = 1_000_000, bad_string_chance=500):
+
+def generate_log(length:int=1_000, bad_string_chance:int=500) -> None:
     path = Path('server.log')
     path.write_text('', encoding='UTF-8')
     with path.open("a", encoding="utf-8") as f:
