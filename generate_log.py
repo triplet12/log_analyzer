@@ -1,9 +1,10 @@
 from pathlib import Path
 from random import randint, choice
 from string import ascii_lowercase
+from datetime import datetime, timedelta
 
 
-def random_ip_generator(bad_string_chance):
+def random_ip(bad_string_chance):
     if randint(1,bad_string_chance) == 1:
         return 'Мусор'
     else:
@@ -14,20 +15,13 @@ def random_ip_generator(bad_string_chance):
         return rand_ip
 
 
-def random_date_generator(bad_string_chance):
-    if randint(1,bad_string_chance) == 1:
-        return 'Мусор'
-    else:
-        rand_date = f"{randint(2000,2100)}-"\
-                f"{randint(1,12)}-"\
-                f"{randint(1,31)} "\
-                f"{randint(0,23)}:"\
-                f"{randint(0,59)}:"\
-                f"{randint(0,59)}"
-        return rand_date
+def random_date(bad_string_chance):
+    start = datetime(2026, 1, 1)
+    moment = start + timedelta(seconds=randint(0, 365 * 24 * 3600))
+    return moment.strftime('%Y-%m-%d %H:%M:%S') 
 
 
-def random_level_generate(bad_string_chance):
+def random_level(bad_string_chance):
     levels = ('ERROR', 'WARNING', 'INFO')
     if randint(1,bad_string_chance) == 1:
         return 'Мусор'
@@ -35,7 +29,7 @@ def random_level_generate(bad_string_chance):
         return choice(levels)
 
 
-def random_message_generate():
+def random_message():
     letters = ascii_lowercase + ' '
     return ''.join(choice(letters) for _ in range(randint(1, 30)))
 
@@ -45,24 +39,23 @@ def generate_line(bad_string_chance=500):
     if randomizer == 0:
         return '\n'
     elif randomizer == 1:
-        return 'мусор'
+        return 'мусор\n'
     else:
-        result = f"{random_date_generator(bad_string_chance)} "\
-            f"{random_level_generate(bad_string_chance)} "\
-            f"{random_ip_generator(bad_string_chance)} "\
-            f"{random_message_generate()}\n"
+        result = f"{random_date(bad_string_chance)} "\
+            f"{random_level(bad_string_chance)} "\
+            f"{random_ip(bad_string_chance)} "\
+            f"{random_message()}\n"
         return result
 
 def generate_lines(length:int = 1_000_000,bad_string_chance=500):
     for _ in range(length):
         yield generate_line(bad_string_chance)
 
-def generate_log(length:int = 1_000_000, bad_sting_chance=500):
-    counter = 0
+def generate_log(length:int = 1_000_000, bad_string_chance=500):
     path = Path('server.log')
     path.write_text('', encoding='UTF-8')
     with path.open("a", encoding="utf-8") as f:
-        for line in generate_lines():
+        for line in generate_lines(length, bad_string_chance):
             f.write(line)
 
 
