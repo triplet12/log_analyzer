@@ -68,7 +68,7 @@ def generate_lines(length:int=1_000,bad_string_chance:int=500):
         yield generate_line(bad_string_chance)
 
 
-def generate_log(length:int=1_000, bad_string_chance:int=500, path:Path=Path('server_log')) -> None:
+def generate_log(length:int=1_000, bad_string_chance:int=500, path:Path=Path('server.log')) -> None:
     '''Генерация length строк и запись их в server.log'''
     with path.open("w", encoding="utf-8") as f:
         for line in generate_lines(length, bad_string_chance):
