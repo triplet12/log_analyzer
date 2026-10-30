@@ -1,29 +1,29 @@
-from log_analyzer import analyze_lines, analyze_log
+from log_analyzer import aggregate, parse, analyze_log
 
 
 def test_empty_log():
-    result = analyze_lines([])
+    result = aggregate(parse(aggregate(parse([]))))
     assert result['broken_lines'] == 0
     assert result['top_error_ip'] is None
 
 
 def test_empty_lines_are_skipped():
-    result = analyze_lines(['', '   ', 'битая строка'])
+    result = aggregate(parse(['', '   ', 'битая строка']))
     assert result['broken_lines'] == 1
 
 
 def test_broken_line():
-    result = analyze_lines(['Поломка!!'])
+    result = aggregate(parse(['Поломка!!']))
     assert result['broken_lines'] == 1
 
 
 def test_incorrcect_date():
-    result = analyze_lines(['2026-10/15 09:12:01 INFO 192.168.1.10 User login'])
+    result = aggregate(parse(['2026-10/15 09:12:01 INFO 192.168.1.10 User login']))
     assert result['broken_lines'] == 1
 
 
 def test_incorrcect_ip():
-    result = analyze_lines(['2026-10-15 09:12:01 INFO 266.168.1.10 User login'])
+    result = aggregate(parse(['2026-10-15 09:12:01 INFO 266.168.1.10 User login']))
     assert result['broken_lines'] == 1
 
 
@@ -44,7 +44,7 @@ def test_normal_log():
         '2026-10-15 10:30:00 ERROR 192.168.1.22 Database timeout',
         '2026-10-15 10:31:12 INFO 192.168.1.35 User logout',
     ]
-    assert analyze_lines(lines) == {
+    assert aggregate(parse(lines)) == {
         'levels': {'INFO': 1, 'WARNING': 0, 'ERROR': 2},
         'top_error_ip': '192.168.1.22',
         'errors_by_hour': {'09': 1, '10': 1},
