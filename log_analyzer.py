@@ -43,11 +43,13 @@ def parse(lines) -> dict|None:
         if not line.rstrip(): 
             continue
 
-        if not is_valid_line(line.split(maxsplit=4)):  # Ошибки
+        splitted_line = line.split(maxsplit=4)
+        
+        if not is_valid_line(splitted_line):
             yield None
             continue
 
-        date, time, level, ip, message = line.split(maxsplit=4)
+        date, time, level, ip, message = splitted_line
         yield {'date': date, 'time': time, 'level': level, 'ip': ip, 'message': message}
 
 
