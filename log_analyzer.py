@@ -79,6 +79,11 @@ def analyze_log(path: Path) -> dict:
     lines = path.read_text(encoding='utf-8').splitlines()
     return analyze_lines(lines)
 
+def read_lines(path: Path):
+    with path.open(encoding='UTF-8') as f:
+        for line in f:
+            yield line.rstrip()
+
 
 if __name__ == '__main__':
     result = analyze_log(Path('server.log'))
