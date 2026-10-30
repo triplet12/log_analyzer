@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 
 
 def random_ip(bad_string_chance: int) -> str:
+    '''Возвращает рандомный ip, либо мусор с шансом 1/bad_string_chance'''
+
     if randint(1,bad_string_chance) == 1:
         return 'Мусор'
     else:
@@ -16,6 +18,9 @@ def random_ip(bad_string_chance: int) -> str:
 
 
 def random_date(bad_string_chance:int) -> str:
+    '''Возвращает рандомную дату формата %Y-%m-%d %H:%M:%S, 
+    либо мусор с шансом 1/bad_string_chance'''
+
     if randint(1, bad_string_chance):
         return 'мусор'
     start = datetime(2026, 1, 1)
@@ -24,6 +29,8 @@ def random_date(bad_string_chance:int) -> str:
 
 
 def random_level(bad_string_chance:int) -> str:
+    '''Возвращает рандомный левел, либо мусор с шансом 1/bad_string_chance'''
+
     levels = ('ERROR', 'WARNING', 'INFO')
     if randint(1,bad_string_chance) == 1:
         return 'Мусор'
@@ -32,11 +39,15 @@ def random_level(bad_string_chance:int) -> str:
 
 
 def random_message() -> str:
+    '''Возвращает рандомное сообщение длинной от 1 до 30 символов'''
+
     letters = ascii_lowercase + ' '
     return ''.join(choice(letters) for _ in range(randint(1, 30)))
 
 
 def generate_line(bad_string_chance:int=500) -> str:
+    '''Генерация строки формата date ip level message'''
+
     randomizer = randint(0,bad_string_chance)
     if randomizer == 0:
         return '\n'
@@ -51,11 +62,14 @@ def generate_line(bad_string_chance:int=500) -> str:
 
 
 def generate_lines(length:int=1_000,bad_string_chance:int=500):
+    '''Генератор length строк'''
+
     for _ in range(length):
         yield generate_line(bad_string_chance)
 
 
 def generate_log(length:int=1_000, bad_string_chance:int=500) -> None:
+    '''Генерация length строк и запись их в server.log'''
     path = Path('server.log')
     path.write_text('', encoding='UTF-8')
     with path.open("a", encoding="utf-8") as f:
@@ -63,5 +77,5 @@ def generate_log(length:int=1_000, bad_string_chance:int=500) -> None:
             f.write(line)
 
 
-
-generate_log(10_000)
+if __name__ == '__main__':
+    generate_log(10_000)
