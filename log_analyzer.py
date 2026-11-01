@@ -59,8 +59,7 @@ def parse(lines) -> dict|None:
             yield None
             continue
 
-        date, time, level, ip, message = splitted_line
-        yield LogRecord(date, time, level, ip, message)
+        yield LogRecord(*splitted_line)
 
 
 def aggregate(records: LogRecord|None) -> dict:
