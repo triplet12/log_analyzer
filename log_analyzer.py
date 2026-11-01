@@ -5,7 +5,7 @@ from pathlib import Path
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True, slots=True)
 class LogRecord:
     date: str
     time: str
