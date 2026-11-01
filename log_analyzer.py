@@ -2,6 +2,16 @@ import datetime
 import ipaddress
 import json
 from pathlib import Path
+from dataclasses import dataclass
+
+
+@dataclass
+class LogRecord:
+    date: str
+    time: str
+    level: str
+    ip: str
+    message: str
 
 
 def is_valid_line(parts: list) -> bool:
@@ -50,10 +60,10 @@ def parse(lines) -> dict|None:
             continue
 
         date, time, level, ip, message = splitted_line
-        yield {'date': date, 'time': time, 'level': level, 'ip': ip, 'message': message}
+        yield LogRecord(date, time, level, ip, message)
 
 
-def aggregate(records: dict|None) -> dict:
+def aggregate(records: LogRecord|None) -> dict:
     '''Возвращает словарь с информацией о строках'''
     analyze_result = {
                 "levels": {'INFO': 0, 'WARNING': 0, 'ERROR': 0},
@@ -64,12 +74,11 @@ def aggregate(records: dict|None) -> dict:
     
     ip_vocab = {}
     
-    for record in records:
-
+    for record in records:        
         if not record:
             analyze_result['broken_lines'] += 1
             continue
-        level, time, ip = record['level'], record['time'], record['ip']
+        level, time, ip = record.level, record.time, record.ip
 
         analyze_result['levels'][level] +=1
 
