@@ -47,7 +47,7 @@ def read_lines(path: Path):
         for line in f:
             yield line.rstrip()
 
-def parse(lines) -> dict|None:
+def parse(lines) -> LogRecord|None:
     '''Возвращает словарь содержащий поля строки либо none если строка некорреткная'''
     for line in lines:
         if not line.rstrip(): 
